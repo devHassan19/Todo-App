@@ -36,6 +36,25 @@ public class CategoryController {
         return categoryRepository.findById(categoryId).orElse(null);
     }
     // U - Update
+    @PutMapping("/categories/{categoryId}")
+    public Category updateCategory(@PathVariable Long categoryId, @RequestBody Category category) {
+        System.out.println("Calling updateCategory() ==> ");
+        Category updateCategory = categoryRepository.findById(categoryId).orElse(null);
+
+        if (updateCategory == null) {
+            return null;
+        }
+
+        updateCategory.setName(category.getName());
+        updateCategory.setDescription(category.getDescription());
+
+        return categoryRepository.save(updateCategory);
+    }
 
     // D - Delete
+    @DeleteMapping("/categories/{categoryId}")
+    public void deleteCategory(@PathVariable Long categoryId) {
+        System.out.println("Calling deleteCategory() ==> ");
+        categoryRepository.deleteById(categoryId);
+    }
 }
