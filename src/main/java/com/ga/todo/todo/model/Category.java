@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,4 +34,16 @@ public class Category {
     @Column
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    // one category can contain more than one items
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "category", orphanRemoval = true)
+    private List<Item> itemList;
+
+    public void setUpdateAt(LocalDateTime now) {
+    }
 }
+//GET	/api/categories/{categoryId}/items
+//POST	/api/categories/{categoryId}/items
+//GET	/api/categories/{categoryId}/items/{itemId}
+//PUT	/api/categories/{categoryId}/items/{itemId}
+//DELETE	/api/categories/{categoryId}/items/{itemId}
